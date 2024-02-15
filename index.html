@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="FR">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style/reset.css">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/hjd2ptj.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Cliquez ici pour voir </title>
+</head>
+<body>
+
+<div class="container">
+    <div class="central" id="content">
+        <!-- Initial content will be loaded here -->
+        <a href="#" onclick="loadLoadingPage();">
+            <p>Pressez "Enregistrer" puis cliquez ici pour accéder au site</p>
+        </a>
+        <button id="startRecordingButton">Enregistrer</button>
+        <a id="downloadLink" style="display: none;">Download Recording</a>
+    </div>
+</div>
+
+<script>
+    let mediaRecorder;
+    let recordedBlobs;
+
+    document.getElementById('startRecordingButton').addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            recordedBlobs = [];
+            mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data && event.data.size > 0) {
+                    recordedBlobs.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = (event) => {
+                const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
+                const downloadLink = document.createElement('a');
+                document.body.appendChild(downloadLink);
+                downloadLink.style = 'display: none';
+                downloadLink.href = URL.createObjectURL(superBuffer);
+                downloadLink.download = 'recorded-video.webm';
+                downloadLink.click();
+                window.URL.revokeObjectURL(downloadLink.href);
+                document.body.removeChild(downloadLink);
+            };
+
+            mediaRecorder.start();
+        } catch (e) {
+            console.error('Error initializing media recording:', e);
+        }
+    });
+
+    window.addEventListener('beforeunload', (event) => {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+        }
+    });
+
+    function loadLoadingPage() {
+        document.getElementById('content').innerHTML = `
+            <div class="central">
+                <img class="gif" src="import/load.gif" alt="roue de chargement">
+            </div>
+        `;
+        // Add any additional JavaScript needed for the loading page
+    }
+</script>
+
+
+</body>
+</html>

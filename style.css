@@ -1,0 +1,86 @@
+body{
+font-family: "indivisible", sans-serif;
+font-weight: 500;
+font-style: normal;
+
+
+  /*________________________________________________
+*/
+
+/*  Pour cacher la scrollbar: */
+
+  overflow-x: hidden;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+/*  cursor: none;
+*/}
+
+body::-webkit-scrollbar{
+  display: none; /*Google Chrome and safari*/
+}
+
+
+
+
+
+/*000000000000000000000000000000000000000000000000000000000000000000000000000
+*/
+.container {
+  /*s*/
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.central{
+  display: block;
+/*  border: 2px solid red;*/
+  /*justify-content: center;
+  display: flex;
+  align-items: center;
+*/
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.gif{
+  width: 3em;
+  /*border: 2px solid red;*/
+}
+
+
+
+#time{
+    text-align: center;
+  justify-content: center;
+/*  border: 2px solid blue;*/
+}
+
+#startRecordingButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* 10px top and bottom, 20px left and right */
+    border-radius: 5px; /* Slightly rounded corners */
+    letter-spacing: 0px;
+    font-size: 16px; /* Larger text */
+    cursor: pointer; /* Changes the cursor on hover */
+    /*transition: letter-spacing 0.3s;*/
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+#startRecordingButton:hover {
+   /* letter-spacing: 5px;*/
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
